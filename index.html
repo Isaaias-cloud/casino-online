@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Casino Online Multiplayer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="loader" class="loader-screen">
+    <div class="spinner-border text-warning" role="status"></div>
+    <strong>Encendiendo luces...</strong>
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark casino-nav sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="#">Casino Online Multiplayer</a>
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        <span class="badge rounded-pill text-bg-warning" id="creditBadge">10000 creditos</span>
+        <button class="btn btn-outline-light btn-sm" id="soundToggle" title="Sonido">Sonido</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-fluid py-3 py-md-4">
+    <div class="alert neon-alert mb-3" role="alert">
+      Este sitio es únicamente para entretenimiento y utiliza dinero virtual sin valor monetario.
+    </div>
+
+    <section class="row g-3">
+      <aside class="col-12 col-lg-3">
+        <div class="panel p-3 mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h2 class="h5 m-0">Perfil</h2>
+            <span class="badge text-bg-info" id="accountType">Invitado</span>
+          </div>
+          <div id="authBox">
+            <input class="form-control form-control-sm mb-2" id="displayName" maxlength="28" placeholder="Nombre en mesa">
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary btn-sm" id="guestBtn">Entrar como invitado</button>
+              <button class="btn btn-outline-warning btn-sm" data-bs-toggle="collapse" data-bs-target="#emailAuth">Registro / Login</button>
+            </div>
+            <div class="collapse mt-2" id="emailAuth">
+              <input class="form-control form-control-sm mb-2" id="email" placeholder="email">
+              <input class="form-control form-control-sm mb-2" id="password" type="password" placeholder="password">
+              <div class="d-flex gap-2">
+                <button class="btn btn-success btn-sm flex-fill" id="registerBtn">Crear</button>
+                <button class="btn btn-info btn-sm flex-fill" id="loginBtn">Login</button>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="small">
+            <div class="d-flex justify-content-between"><span>Jugador</span><strong id="profileName">-</strong></div>
+            <div class="d-flex justify-content-between"><span>Partidas</span><strong id="statGames">0</strong></div>
+            <div class="d-flex justify-content-between"><span>Victorias</span><strong id="statWins">0</strong></div>
+            <div class="d-flex justify-content-between"><span>Derrotas</span><strong id="statLosses">0</strong></div>
+          </div>
+        </div>
+
+        <div class="panel p-3 mb-3">
+          <h2 class="h5">Ranking</h2>
+          <ol class="leaderboard ps-3 m-0" id="leaderboard"></ol>
+        </div>
+
+        <div class="panel p-3">
+          <h2 class="h5">Chat Global</h2>
+          <div class="chat-log mb-2" id="globalChat"></div>
+          <form class="d-flex gap-2" id="globalChatForm">
+            <input class="form-control form-control-sm" id="globalChatInput" maxlength="240" placeholder="Mensaje">
+            <button class="btn btn-warning btn-sm">Enviar</button>
+          </form>
+        </div>
+      </aside>
+
+      <section class="col-12 col-lg-6">
+        <div class="panel p-3 mb-3">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <h1 class="h4 m-0">Juegos disponibles</h1>
+            <div class="volume">
+              <label class="form-label small mb-1" for="volumeRange">Volumen</label>
+              <input type="range" min="0" max="1" step="0.05" value="0.35" id="volumeRange" class="form-range">
+            </div>
+          </div>
+          <div class="row g-3" id="gamesGrid"></div>
+        </div>
+
+        <div class="panel p-3 game-stage">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+            <div>
+              <h2 class="h5 m-0" id="roomTitle">Sin sala activa</h2>
+              <small class="text-secondary" id="roomMeta">Crea o unete a una sala para jugar.</small>
+            </div>
+            <button class="btn btn-outline-light btn-sm" id="leaveRoomBtn">Salir</button>
+          </div>
+          <div id="gameView" class="game-view empty-state">Selecciona un juego para comenzar.</div>
+        </div>
+      </section>
+
+      <aside class="col-12 col-lg-3">
+        <div class="panel p-3 mb-3">
+          <h2 class="h5">Crear sala</h2>
+          <select class="form-select form-select-sm mb-2" id="createGameSelect"></select>
+          <input class="form-control form-control-sm mb-2" id="roomName" maxlength="40" placeholder="Nombre de sala">
+          <button class="btn btn-warning w-100 btn-sm" id="createRoomBtn">Crear sala</button>
+        </div>
+
+        <div class="panel p-3 mb-3">
+          <h2 class="h5">Unirse por ID</h2>
+          <div class="input-group input-group-sm">
+            <input class="form-control" id="joinRoomId" placeholder="room-...">
+            <button class="btn btn-info" id="joinRoomBtn">Unir</button>
+          </div>
+        </div>
+
+        <div class="panel p-3 mb-3">
+          <h2 class="h5">Salas activas</h2>
+          <div id="roomsList" class="rooms-list"></div>
+        </div>
+
+        <div class="panel p-3">
+          <h2 class="h5">Chat de Sala</h2>
+          <div class="chat-log mb-2" id="roomChat"></div>
+          <form class="d-flex gap-2" id="roomChatForm">
+            <input class="form-control form-control-sm" id="roomChatInput" maxlength="240" placeholder="Mensaje">
+            <button class="btn btn-warning btn-sm">Enviar</button>
+          </form>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <template id="gameCardTemplate">
+    <div class="col-12 col-md-6">
+      <article class="game-card h-100">
+        <div class="game-art"></div>
+        <div class="p-3">
+          <div class="d-flex justify-content-between gap-2">
+            <h3 class="h5"></h3>
+            <span class="badge text-bg-dark players"></span>
+          </div>
+          <p class="small text-secondary"></p>
+          <button class="btn btn-primary btn-sm play-btn">Jugar</button>
+        </div>
+      </article>
+    </div>
+  </template>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/game-renderers.js"></script>
+  <script src="games/horse-race.js"></script>
+  <script src="games/blackjack.js"></script>
+  <script src="games/pool.js"></script>
+  <script src="games/slots.js"></script>
+  <script src="js/lobby.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

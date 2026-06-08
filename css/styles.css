@@ -1,0 +1,236 @@
+:root {
+  --bg: #05070d;
+  --panel: #101525;
+  --panel-2: #141a33;
+  --electric: #00d4ff;
+  --purple: #9b5cff;
+  --gold: #ffd166;
+  --danger: #f72585;
+  --felt: #09614a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  color: #f4f7ff;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(0, 212, 255, 0.18), transparent 32%),
+    radial-gradient(circle at 88% 12%, rgba(155, 92, 255, 0.16), transparent 28%),
+    linear-gradient(135deg, #05070d 0%, #0b0f1f 55%, #09050f 100%);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.casino-nav {
+  background: rgba(5, 7, 13, 0.88);
+  border-bottom: 1px solid rgba(255, 209, 102, 0.28);
+  backdrop-filter: blur(10px);
+}
+
+.loader-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  align-content: center;
+  background: #05070d;
+  transition: opacity 0.25s ease;
+}
+
+.loader-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.panel, .game-card {
+  background: linear-gradient(180deg, rgba(20, 26, 51, 0.95), rgba(10, 14, 28, 0.94));
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 0 26px rgba(0, 212, 255, 0.08);
+}
+
+.neon-alert {
+  color: #201600;
+  background: linear-gradient(90deg, rgba(255, 209, 102, 0.95), rgba(0, 212, 255, 0.84));
+  border: 0;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--electric), var(--purple));
+  border: 0;
+}
+
+.btn-warning {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #15100a;
+  font-weight: 700;
+}
+
+.form-control, .form-select {
+  color: #f4f7ff;
+  background-color: #0b1020;
+  border-color: rgba(0, 212, 255, 0.28);
+}
+
+.form-control:focus, .form-select:focus {
+  color: #fff;
+  background-color: #0b1020;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 0.16rem rgba(255, 209, 102, 0.2);
+}
+
+.game-card {
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 209, 102, 0.56);
+}
+
+.game-art {
+  min-height: 110px;
+  background:
+    linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(155, 92, 255, 0.28)),
+    repeating-linear-gradient(90deg, transparent 0 12px, rgba(255, 209, 102, 0.08) 12px 14px);
+}
+
+.game-art.horse-race { background-color: #17304a; }
+.game-art.blackjack { background-color: #0c4b3b; }
+.game-art.pool { background-color: #0a593f; }
+.game-art.slots { background-color: #2a143e; }
+
+.rooms-list, .chat-log {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.room-item {
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+  margin-bottom: 8px;
+}
+
+.chat-log {
+  min-height: 160px;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.chat-msg {
+  font-size: 0.84rem;
+  margin-bottom: 6px;
+  overflow-wrap: anywhere;
+}
+
+.game-view {
+  min-height: 420px;
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  color: #9aa5c6;
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+}
+
+.track {
+  display: grid;
+  gap: 8px;
+}
+
+.lane {
+  position: relative;
+  height: 44px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(0,212,255,0.08));
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.horse {
+  position: absolute;
+  top: 7px;
+  width: 34px;
+  height: 30px;
+  border-radius: 50% 45% 45% 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: #03040a;
+  transition: left 0.45s ease;
+}
+
+.card-hand {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.playing-card {
+  width: 56px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #f8f8f8;
+  color: #111;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.pool-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 900 / 460;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #05251c;
+}
+
+#poolCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.slot-reels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(70px, 1fr));
+  gap: 10px;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.slot-reel {
+  min-height: 100px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #f6f0dc;
+  color: #15100a;
+  font-size: clamp(1.6rem, 8vw, 3rem);
+  font-weight: 900;
+  box-shadow: inset 0 0 18px rgba(0,0,0,0.28);
+}
+
+.spin { animation: pulse 0.5s ease-in-out infinite alternate; }
+
+@keyframes pulse {
+  from { transform: scale(0.98); filter: brightness(0.9); }
+  to { transform: scale(1.02); filter: brightness(1.2); }
+}
+
+@media (max-width: 568px) {
+  .game-view { min-height: 340px; }
+  .chat-log { min-height: 120px; }
+  .navbar-brand { max-width: 190px; white-space: normal; line-height: 1.1; }
+}
