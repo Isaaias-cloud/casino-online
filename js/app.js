@@ -1,5 +1,5 @@
 (function () {
-  const socket = io();
+  const socket = io('https://casino-online-eoqx.onrender.com');
   const state = {
     user: null,
     games: [],
