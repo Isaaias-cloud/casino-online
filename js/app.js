@@ -1,5 +1,23 @@
 (function () {
-  const socket = io('https://casino-online-eoqx.onrender.com');
+  const socketServerUrl = window.CASINO_SOCKET_URL
+    || (['localhost', '127.0.0.1'].includes(window.location.hostname)
+      ? window.location.origin
+      : 'https://casino-online-eoqx.onrender.com');
+
+  if (typeof window.io !== 'function') {
+    console.error('Socket.IO client no esta cargado. Revisa el script de socket.io en index.html.');
+    document.addEventListener('DOMContentLoaded', () => {
+      const loader = document.getElementById('loader');
+      if (loader) loader.classList.add('hidden');
+      document.body.insertAdjacentHTML(
+        'afterbegin',
+        '<div class="alert alert-danger m-3">No se pudo cargar Socket.IO. Revisa la conexion al cliente socket.io.</div>'
+      );
+    });
+    return;
+  }
+
+  const socket = window.io(socketServerUrl);
   const state = {
     user: null,
     games: [],
